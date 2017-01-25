@@ -2,30 +2,15 @@
 
 include('motdepasse.class.php');
 
-$mdp = new MotDePasse(10, "MUniqid");
+if(isset($_POST['formMotDePasse'])){
+    $formMotDePasse = MotDePasse::formMotDePasse($_POST);
+    $mdp = new MotDePasse($_POST['taille'], $_POST['method']);
+} else {
+    $formMotDePasse = MotDePasse::formMotDePasse();
+}
 
-echo "<b>Mot de pass généré avec uniqid():</b> " . $mdp->motdepasse . "<br>";
+echo $formMotDePasse;
 
-$mdp->MChaineAleatoire();
-
-echo "<b>Mot de pass généré avec une chaine de caractère aléatoire:</b> " . $mdp->motdepasse . "<br>";
-
-$mdp->MNonRedondance();
-
-echo "<b>Mot de pass généré sans caractère redondant:</b> " . $mdp->motdepasse . "<br>";
-
-$mdp->taille = 6;
-
-echo "<hr><br><b>Changement de taille du mot de passe</b><br><br>";
-
-$mdp->MUniqid();
-
-echo "<b>Mot de pass généré avec uniqid():</b> " . $mdp->motdepasse . "<br>";
-
-$mdp->MChaineAleatoire();
-
-echo "<b>Mot de pass généré avec une chaine de caractère aléatoire:</b> " . $mdp->motdepasse . "<br>";
-
-$mdp->MNonRedondance();
-
-echo "<b>Mot de pass généré sans caractère redondant:</b> " . $mdp->motdepasse . "<br>";
+if(isset($mdp)){
+    echo "Mot de passe: " . $mdp->motdepasse;
+}

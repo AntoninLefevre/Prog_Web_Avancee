@@ -50,6 +50,37 @@ Class MotDePasse {
         }
     }
 
+    public static function formMotDePasse($data = array()){
+        $method = isset($data['method']) ? $data['method'] : "";
+        $taille = isset($data['taille']) ? $data['taille'] : "1";
+        $sMUniqid = "";
+        $sMChaineAleatoire = "";
+        $sMNonRedondance = "";
+        if(isset($data['method'])){
+            if($data['method'] == "MUniqid"){
+                $sMUniqid = "selected";
+            } elseif($data['method'] == "MChaineAleatoire"){
+                $sMChaineAleatoire = "selected";
+            } elseif($data['method'] == "MNonRedondance") {
+                $sMNonRedondance = "selected";
+            }
+        }
+
+        $html = <<<HTML
+        <form method="post">
+            <select name="method">
+                <option value="MUniqid" $sMUniqid>UniqId</option>
+                <option value="MChaineAleatoire" $sMChaineAleatoire>Chaine Aléatoire</option>
+                <option value="MNonRedondance" $sMNonRedondance>Chaine aléatoire sans redondance</option>
+            </select>
+            <input type="number" name="taille" min=1 placeholder="Taille du mot de passe" value=$taille required>
+            <input type="submit" name="formMotDePasse">
+        </form>
+HTML;
+
+        return $html;
+    }
+
     /**
      * Définition d'un mot de passe en utilisant la foction PHP uniqid()
      */
