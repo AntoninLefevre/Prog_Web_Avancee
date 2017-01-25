@@ -39,7 +39,7 @@ Class Tableau {
     }
 
     /**
-     * Méélange les valeurs du tableau
+     * Mélange les valeurs du tableau
      */
     public function melange(){
     	shuffle($this->contenu);

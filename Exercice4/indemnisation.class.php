@@ -2,14 +2,33 @@
 
 Class Indemnisation {
 
+    /**
+     * Nombre de CV de la voiture
+     * @var int
+     */
     private $cv;
+
+    /**
+     * Distanceparcourue
+     * @var int
+     */
     private $distance;
 
+    /**
+     * Constructeur des indemnisations
+     * @param int $cv       [description]
+     * @param int $distance [description]
+     */
 	public function __construct(int $cv, int $distance){
         $this->cv = $cv;
         $this->distance = $distance;
 	}
 
+    /**
+     * Accesseur
+     * @param  String $name Nom de l'attribut
+     * @return Multiple Valeur de l'attribut
+     */
     public function __get($name){
         if(property_exists(__CLASS__, $name)){
             return $this->$name;
@@ -18,6 +37,11 @@ Class Indemnisation {
         }
     }
 
+    /**
+     * Modificateur
+     * @param String $name  Nom de l'attribut à modifier
+     * @param Multiple $value Valeur à appliquer
+     */
     public function __set($name, $value){
         if(property_exists(__CLASS__, $name)){
             $this->$name = $value;
@@ -26,6 +50,10 @@ Class Indemnisation {
         }
     }
 
+    /**
+     * Calcul des indemnisations
+     * @return float Montant des indemnisations
+     */
     public function calculIndemnisation(){
         $distance = $this->distance;
 
@@ -77,6 +105,10 @@ Class Indemnisation {
         return round($montantIndemnite,2);
     }
 
+    /**
+     * Affiche les indemnisations
+     * @return String Phrase d'informations
+     */
     public function informations(){
         return "Le montant des indemnisations est de " . $this->calculIndemnisation() . "€";
     }

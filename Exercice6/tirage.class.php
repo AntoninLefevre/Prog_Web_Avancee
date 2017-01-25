@@ -2,29 +2,59 @@
 
 Class Tirage {
 
-    private $grilleNombres = null;
-    private $grilleEtoiles = null;
+    /**
+     * Nombres saisies par l'utilisateur
+     * @var Array
+     */
     private $nombres;
+
+    /**
+     * Etoiles saisie par l'utilisateur
+     * @var Array
+     */
     private $etoiles;
+
+    /**
+     * Nombres tirés
+     * @var Array|null
+     */
     private $tirageNombres = null;
+
+    /**
+     * Etoiles tirées
+     * @var Array|null
+     */
     private $tirageEtoiles = null;
+
+    /**
+     * Nombres se trouvant à la fois dans $nombres et $tirageNombres
+     * @var Array|null
+     */
     private $resultatNombres = null;
+
+    /**
+     * Etoiles se trouvant à la fois dans $etoiles et $tirageEtoiles
+     * @var Array|null
+     */
     private $resultatEtoiles = null;
 
+    /**
+     * Constructeur du tirage
+     * @param Array $nombres Tableau des nombres saisis par l'utilisateur
+     * @param Array $etoiles Tableau des étoiles saisies par l'utilisateur
+     */
 	public function __construct(Array $nombres, Array $etoiles){
         $this->nombres = $nombres;
         $this->etoiles = $etoiles;
         sort($this->nombres);
         sort($this->etoiles);
-        for ($i=1; $i < 50; $i++) {
-            $this->grilleNombres[] = $i;
-        }
-
-        for ($i=1; $i < 12; $i++) {
-            $this->grilleEtoiles[] = $i;
-        }
 	}
 
+    /**
+     * Accesseur
+     * @param  String $name Nom de l'attribut
+     * @return Multiple Valeur de l'attribut
+     */
     public function __get($name){
         if(property_exists(__CLASS__, $name)){
             return $this->$name;
@@ -33,6 +63,11 @@ Class Tirage {
         }
     }
 
+    /**
+     * Modificateur
+     * @param String $name  Nom de l'attribut à modifier
+     * @param Multiple $value Valeur à appliquer
+     */
     public function __set($name, $value){
         if(property_exists(__CLASS__, $name)){
             $this->$name = $value;
@@ -41,6 +76,12 @@ Class Tirage {
         }
     }
 
+    /**
+     * Formulaire de saisi des nombres et des étoiles
+     * @param  String $action Page de gestion du tirage
+     * @param  Array   $data   Listes des informations pour la grille
+     * @return String          Formulaire au format HTML
+     */
     public static function formSaisie(String $action = "", Array $data = array()){
 
         $html = <<<HTML
@@ -67,6 +108,10 @@ HTML;
 		return $html;
     }
 
+    /**
+     * Vérification de la cohérence des données saisies
+     * @return Bool Renvoie True si il n'y a pas de problèmes False sinon
+     */
     public function verifSaisieChiffre(){
 
     	foreach ($this->nombres as $nombre) {
@@ -96,9 +141,16 @@ HTML;
     	return true;
     }
 
+    /**
+     * Tirage des nombres et étoiles
+     */
     public function tirage(){
-    	$grilleNombres = $this->grilleNombres;
-    	$grilleEtoiles = $this->grilleEtoiles;
+        for ($i=1; $i < 50; $i++) {
+            $grilleNombres[] = $i;
+        }
+        for ($i=1; $i < 12; $i++) {
+            $grilleEtoiles[] = $i;
+        }
     	shuffle($grilleNombres);
     	shuffle($grilleEtoiles);
     	$grilleNombres = array_slice($grilleNombres,0,5);
@@ -109,6 +161,10 @@ HTML;
     	$this->tirageEtoiles = $grilleEtoiles;
     }
 
+    /**
+     * Résultats du tirage
+     * @return String Résultats du tirage au format HTML
+     */
     public function resultat(){
 
     	$res = "<ul><li>Numéros tirés: " . implode(', ', $this->tirageNombres) . "</li>";
